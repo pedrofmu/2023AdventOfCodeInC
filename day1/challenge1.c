@@ -4,24 +4,22 @@
 #include <string.h>
 
 int findTwoDigits(char *input){
-    char respons[2];
+    char respons[2] ={-1, -1};
    
-    //First number
     for (int i = 0; i < strlen(input); i++){
         if (isdigit(input[i])){
-            respons[0] = input[i];
-            break;
+            if (respons[0] == -1)
+                respons[0] = input[i] - '0';
+
+            respons[1] = input[i] - '0';
         }
     }
 
-    //Second caracter
-    for (int i = 0; i < strlen(input); i++){
-        if (isdigit(input[i])){
-            respons[1] = input[i];
-        }
-    } 
+    if (respons[0] == -1){
+        return 0;
+    }
 
-    return atoi(respons);
+    return respons[0] * 10 + respons[1];
 }
 
 
@@ -30,17 +28,18 @@ int main(){
     //Open the input file
     FILE *inputs;
     char line[LINE_MAX_LENGTH];
-    inputs = fopen("inputs.txt", "r");
+    inputs = fopen("inputs1.txt", "r");
 
     //The sum of all input
     int sum = 0;
 
     while(fgets(line, LINE_MAX_LENGTH, inputs) != NULL){
         sum += findTwoDigits(line); 
+        printf("%d\n", findTwoDigits(line));
     }
 
     fclose(inputs);
-    printf("%d", sum);
+    printf("%d\n", sum);
 
     return 0;
 }
